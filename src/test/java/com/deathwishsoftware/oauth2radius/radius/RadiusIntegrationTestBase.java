@@ -1,4 +1,4 @@
-package com.deathwishsoftware.oauth2radius;
+package com.deathwishsoftware.oauth2radius.radius;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
