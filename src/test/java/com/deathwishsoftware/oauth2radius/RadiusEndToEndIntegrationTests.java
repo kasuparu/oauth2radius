@@ -9,7 +9,7 @@ import org.tinyradius.packet.RadiusPacket;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class RadiusEndToEndIT extends RadiusIntegrationTestBase {
+public class RadiusEndToEndIntegrationTests extends RadiusIntegrationTestBase {
 
     @Test
     public void serverRespondsSuccess() throws Exception {

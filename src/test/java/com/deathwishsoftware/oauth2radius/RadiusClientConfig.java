@@ -3,20 +3,21 @@ package com.deathwishsoftware.oauth2radius;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.tinyradius.util.RadiusClient;
 
 @Configuration
-public class RadiusServerConfig {
+public class RadiusClientConfig {
 
     @Value("${oauth2radius.auth-port:0}")
     private int authPort;
 
     @Bean
-    public RadiusServerImpl getRadiusServer() {
-        RadiusServerImpl server = new RadiusServerImpl();
+    public RadiusClient getRadiusClient() {
+        RadiusClient client = new RadiusClient("localhost", "shared-secret");
         if (authPort > 1 && authPort < 65535) {
-            server.setAuthPort(this.authPort);
+            client.setAuthPort(this.authPort);
         }
-        return server;
+        return client;
     }
 
 }
