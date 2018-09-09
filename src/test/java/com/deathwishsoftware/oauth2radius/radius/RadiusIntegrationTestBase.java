@@ -1,5 +1,6 @@
 package com.deathwishsoftware.oauth2radius.radius;
 
+import com.deathwishsoftware.oauth2radius.fixtures.Fixtures;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.tinyradius.packet.AccessRequest;
@@ -11,6 +12,9 @@ public class RadiusIntegrationTestBase {
 
     @Autowired
     protected RadiusClient client;
+
+    @Autowired
+    protected Fixtures fixtures;
 
     RadiusIntegrationTestBase() {
     }
