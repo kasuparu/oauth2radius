@@ -13,7 +13,7 @@ public class RadiusServerRunner {
 
     @PostConstruct
     public void start() {
-        server.start(true, false);
+        server.start(true, true);
     }
 
     @PreDestroy

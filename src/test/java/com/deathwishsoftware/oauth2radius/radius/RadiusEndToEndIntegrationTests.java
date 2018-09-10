@@ -19,14 +19,22 @@ public class RadiusEndToEndIntegrationTests extends RadiusIntegrationTestBase {
 
     @Test
     public void serverRespondsSuccess() throws Exception {
-        RadiusPacket response = this.makeRequest("testuser@mailinator.com", "testuser@mailinator.com-password");
+        RadiusPacket response = this.makeAuthenticationRequest("testuser@mailinator.com", "testuser@mailinator.com-password");
         Assert.assertEquals(RadiusPacket.ACCESS_ACCEPT, response.getPacketType());
     }
 
+    // TODO Try running several requests in parallel
+
     @Test
     public void serverRespondsFailure() throws Exception {
-        RadiusPacket response = this.makeRequest("testuser@mailinator.com", "testuser@mailinator.com-wrongpassword");
+        RadiusPacket response = this.makeAuthenticationRequest("testuser@mailinator.com", "testuser@mailinator.com-wrongpassword");
         Assert.assertEquals(RadiusPacket.ACCESS_REJECT, response.getPacketType());
+    }
+
+    @Test
+    public void serverAccountingStart() throws Exception {
+        RadiusPacket response = this.makeAccountingStartRequest("testuser@mailinator.com");
+        Assert.assertEquals(RadiusPacket.ACCOUNTING_RESPONSE, response.getPacketType());
     }
 
     // TODO Check authenticating by crypt-password

@@ -11,11 +11,17 @@ public class RadiusClientConfig {
     @Value("${oauth2radius.auth-port:0}")
     private int authPort;
 
+    @Value("${oauth2radius.acct-port:0}")
+    private int acctPort;
+
     @Bean
     public RadiusClient getRadiusClient() {
         RadiusClient client = new RadiusClient("localhost", "shared-secret");
         if (authPort > 1 && authPort < 65535) {
-            client.setAuthPort(this.authPort);
+            client.setAuthPort(authPort);
+        }
+        if (acctPort > 1 && acctPort < 65535) {
+            client.setAcctPort(acctPort);
         }
         return client;
     }
