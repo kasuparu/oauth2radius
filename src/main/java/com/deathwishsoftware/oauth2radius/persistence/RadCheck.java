@@ -23,6 +23,7 @@ public class RadCheck {
 
     private String attribute;
 
+    @Column(columnDefinition = "char(2)")
     private String op;
 
     private String value;
