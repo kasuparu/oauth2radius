@@ -12,9 +12,14 @@ import org.tinyradius.packet.RadiusPacket;
 @SpringBootTest
 public class RadiusEndToEndIntegrationTests extends RadiusIntegrationTestBase {
 
+    // TODO Make the set-up a static @BeforeClass
+    // This require to figure out how to make everything underlying static
+    // This will allow to not delete all rows on insertion
     @Before
     public void setUp() {
         fixtures.insertBasicUsers();
+        fixtures.insertLocalhostClient();
+        fixtures.refreshClients();
     }
 
     @Test

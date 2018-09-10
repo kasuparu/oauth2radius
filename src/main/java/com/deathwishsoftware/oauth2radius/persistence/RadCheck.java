@@ -19,20 +19,23 @@ public class RadCheck {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(unique = true)
     private String username;
 
+    @Column
     private String attribute;
 
     @Column(columnDefinition = "char(2)")
     private String op;
 
+    @Column
     private String value;
 
     @Override
     public String toString() {
         return String.format(
-                "RadCheck{id=%d, username=%s, attribute=%s, op=%s, value=%s}",
-                id, username, attribute, op, value
+                "RadCheck{id=%d, username=%s, attribute=%s, op=%s, value=%s...}",
+                id, username, attribute, op, value.substring(0, 3)
         );
     }
 
