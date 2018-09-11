@@ -21,15 +21,16 @@ public class RadiusServerImpl extends RadiusServer {
     public RadiusServerImpl() {
     }
 
+    @Override
     public String getSharedSecret(InetSocketAddress remoteAddress) {
         String address = remoteAddress.getAddress().getHostAddress();
-        logger.info("Searching for client record by address " + address);
         if (clients.containsKey(address)) {
             return clients.get(address);
         }
         return null;
     }
 
+    @Override
     public String getUserPassword(String userName) {
         RadCheck userRecord = this.radCheckRepository.findByUsername(userName);
         if (userRecord == null) {

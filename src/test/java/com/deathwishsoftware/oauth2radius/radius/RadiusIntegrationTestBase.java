@@ -7,6 +7,9 @@ import org.tinyradius.packet.AccessRequest;
 import org.tinyradius.packet.AccountingRequest;
 import org.tinyradius.packet.RadiusPacket;
 import org.tinyradius.util.RadiusClient;
+import org.tinyradius.util.RadiusException;
+
+import java.io.IOException;
 
 @ActiveProfiles("test")
 public class RadiusIntegrationTestBase {
@@ -20,13 +23,26 @@ public class RadiusIntegrationTestBase {
     RadiusIntegrationTestBase() {
     }
 
-    protected RadiusPacket makeAuthenticationRequest(String userName, String userPassword) throws Exception {
+    protected RadiusPacket makeChapAuthenticationRequest(String userName, String userPassword) throws RadiusException, IOException {
         AccessRequest request = new AccessRequest(userName, userPassword);
         request.setAuthProtocol(AccessRequest.AUTH_CHAP);
         return this.client.authenticate(request);
     }
 
-    protected RadiusPacket makeAccountingStartRequest(String userName) throws Exception {
+    protected void makeMalformedChapAuthenticationRequest(String userName) throws RadiusException, IOException {
+        AccessRequest request = new MalformedAccessRequest(userName);
+        request.setAuthProtocol(AccessRequest.AUTH_CHAP);
+        int originalRetryCount = this.client.getRetryCount();
+        this.client.setRetryCount(1);
+        try {
+            this.client.authenticate(request);
+        } catch (IOException e) {
+            this.client.setRetryCount(originalRetryCount);
+            throw e;
+        }
+    }
+
+    protected RadiusPacket makeAccountingStartRequest(String userName) throws RadiusException, IOException {
         AccountingRequest request = new AccountingRequest(userName, AccountingRequest.ACCT_STATUS_TYPE_START);
         return this.client.account(request);
     }
