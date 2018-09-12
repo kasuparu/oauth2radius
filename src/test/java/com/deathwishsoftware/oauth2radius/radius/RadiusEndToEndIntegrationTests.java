@@ -24,15 +24,13 @@ public class RadiusEndToEndIntegrationTests extends RadiusIntegrationTestBase {
     }
 
     @Test
-    public void serverRespondsSuccess() throws Exception {
+    public void serverRespondsChapSuccess() throws Exception {
         RadiusPacket response = this.makeChapAuthenticationRequest("testuser@mailinator.com", "testuser@mailinator.com-password");
         Assert.assertEquals(RadiusPacket.ACCESS_ACCEPT, response.getPacketType());
     }
 
-    // TODO Try running several requests in parallel
-
     @Test
-    public void serverRespondsFailure() throws Exception {
+    public void serverRespondsChapFailure() throws Exception {
         RadiusPacket response = this.makeChapAuthenticationRequest("testuser@mailinator.com", "testuser@mailinator.com-wrongpassword");
         Assert.assertEquals(RadiusPacket.ACCESS_REJECT, response.getPacketType());
     }
