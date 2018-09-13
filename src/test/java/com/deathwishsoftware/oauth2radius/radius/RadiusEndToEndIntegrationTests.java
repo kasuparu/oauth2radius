@@ -19,8 +19,7 @@ public class RadiusEndToEndIntegrationTests extends RadiusIntegrationTestBase {
     @Before
     public void setUp() {
         fixtures.insertBasicUsers();
-        fixtures.insertLocalhostClient();
-        fixtures.refreshClients();
+        fixtures.insertBasicClients();
     }
 
     @Test

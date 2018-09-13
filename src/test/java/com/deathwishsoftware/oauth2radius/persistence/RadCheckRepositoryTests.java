@@ -22,9 +22,6 @@ public class RadCheckRepositoryTests {
     private RadCheckRepository radCheckRepository;
 
     @Autowired
-    private RadCheckCustomRepository radCheckCustomRepository;
-
-    @Autowired
     private Fixtures fixtures;
 
 	@Before
@@ -47,18 +44,6 @@ public class RadCheckRepositoryTests {
         RadCheck test = radCheckRepository.findByUsername("testuser@mailinator.com");
         Assert.assertNotNull(test);
         Assert.assertEquals("testuser@mailinator.com-password", test.getValue());
-    }
-
-    @Test
-    public void getToAuthenticate() {
-        RadCheck l2tp = radCheckCustomRepository.findToAuthenticate("l2tp", "l2tp");
-        Assert.assertNotNull(l2tp);
-        Assert.assertEquals("l2tp", l2tp.getUsername());
-
-        // TODO Check fetching by crypt-password
-
-        RadCheck nonExisting = radCheckCustomRepository.findToAuthenticate("none", "whatsoever");
-        Assert.assertNull(nonExisting);
     }
 
 }

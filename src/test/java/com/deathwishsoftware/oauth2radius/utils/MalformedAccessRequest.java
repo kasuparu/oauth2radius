@@ -1,4 +1,4 @@
-package com.deathwishsoftware.oauth2radius.radius;
+package com.deathwishsoftware.oauth2radius.utils;
 
 import org.tinyradius.packet.AccessRequest;
 

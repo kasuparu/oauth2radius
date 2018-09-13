@@ -1,4 +1,4 @@
-package com.deathwishsoftware.oauth2radius.radius;
+package com.deathwishsoftware.oauth2radius.utils;
 
 import com.deathwishsoftware.oauth2radius.persistence.RadCheck;
 import com.deathwishsoftware.oauth2radius.persistence.RadCheckRepository;

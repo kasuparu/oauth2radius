@@ -1,6 +1,7 @@
 package com.deathwishsoftware.oauth2radius.radius;
 
 import com.deathwishsoftware.oauth2radius.fixtures.Fixtures;
+import com.deathwishsoftware.oauth2radius.utils.MalformedAccessRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.tinyradius.packet.AccessRequest;

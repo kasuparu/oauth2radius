@@ -2,11 +2,11 @@ package com.deathwishsoftware.oauth2radius.fixtures;
 
 import com.deathwishsoftware.oauth2radius.persistence.RadCheck;
 import com.deathwishsoftware.oauth2radius.persistence.RadCheckRepository;
-import com.deathwishsoftware.oauth2radius.persistence.RadClient;
-import com.deathwishsoftware.oauth2radius.persistence.RadClientRepository;
-import com.deathwishsoftware.oauth2radius.radius.RadiusServerClientRefresher;
-import com.deathwishsoftware.oauth2radius.radius.RadiusServerImpl;
+import com.deathwishsoftware.oauth2radius.utils.RadiusServerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Fixtures {
 
@@ -14,13 +14,7 @@ public class Fixtures {
     private RadCheckRepository radCheckRepository;
 
     @Autowired
-    private RadClientRepository radClientRepository;
-
-    @Autowired
     private RadiusServerImpl server;
-
-    @Autowired
-    private RadiusServerClientRefresher refresher;
 
     public void insertBasicUsers() {
         this.radCheckRepository.deleteAll();
@@ -31,15 +25,11 @@ public class Fixtures {
         this.radCheckRepository.save(test);
     }
 
-    public void insertLocalhostClient() {
-        this.radClientRepository.deleteAll();
-        RadClient local = new RadClient("127.0.0.1", "shared-secret");
-        this.radClientRepository.save(local);
-    }
-
-    // TODO This is far from elegant
-    public void refreshClients() {
-        this.server.setClients(this.refresher.getClients());
+    public void insertBasicClients() {
+        Map<String, String> clients = new HashMap<>();
+        clients.put("192.168.0.1", "shared-secret");
+        clients.put("127.0.0.1", "shared-secret");
+        this.server.setClients(clients);
     }
 
 }
