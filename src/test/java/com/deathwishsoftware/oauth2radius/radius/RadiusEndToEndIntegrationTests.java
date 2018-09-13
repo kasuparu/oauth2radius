@@ -45,6 +45,4 @@ public class RadiusEndToEndIntegrationTests extends RadiusIntegrationTestBase {
         Assert.assertEquals(RadiusPacket.ACCOUNTING_RESPONSE, response.getPacketType());
     }
 
-    // TODO Check authenticating by crypt-password
-
 }

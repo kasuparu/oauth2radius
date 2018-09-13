@@ -36,7 +36,11 @@ public class RadiusServerImpl extends RadiusServer {
         if (userRecord == null) {
             return null;
         }
-        return userRecord.getValue();
+        if ("Cleartext-Password".equals(userRecord.getAttribute()) && ":=".equals(userRecord.getOp())) {
+            return userRecord.getValue();
+        }
+        logger.warn(String.format("Password for user %s must be stored in cleartext", userName));
+        return null;
     }
 
     public void setClients(Map<String, String> clients) {

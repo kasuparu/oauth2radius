@@ -19,7 +19,6 @@ public class Fixtures {
     public void insertBasicUsers() {
         this.radCheckRepository.deleteAll();
         RadCheck l2tp = new RadCheck(1, "l2tp", "Cleartext-Password", ":=", "l2tp");
-        // TODO crypt the password and use Crypt-Password
         RadCheck test = new RadCheck(2, "testuser@mailinator.com", "Cleartext-Password", ":=", "testuser@mailinator.com-password");
         this.radCheckRepository.save(l2tp);
         this.radCheckRepository.save(test);
