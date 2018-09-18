@@ -58,7 +58,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
             .and().exceptionHandling()
             .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/"))
-            .and().logout().logoutSuccessUrl("/").permitAll()
             .and().addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class)
         ;
     }

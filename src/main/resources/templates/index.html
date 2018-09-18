@@ -1,13 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>VPN Authenticator</title>
-    <!--<link rel="stylesheet" href="style.css">-->
-    <!--<script src="script.js"></script>-->
+    <link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css"/>
 </head>
-<body>
-    Index Page Content
-<!-- page content -->
+<body class="bg-near-white near-black helvetica">
+    <main class="pa3 center measure-wide lh-copy">
+        <div class="tc">
+            <h2>VPN Authenticator</h2>
+        </div>
+        <div th:if="${isAuthenticated}" class="mr5 ml5">
+            <p>
+                Logged in as
+            </p>
+            <p class="tc">
+                <img th:src="${picture}" width="50px"/><br />
+                <span th:text="${name}"></span>
+            </p>
+            <p>
+                Use these credentials in your VPN client
+            </p>
+            <p>
+                Login: <span th:text="${email}"></span><br />
+                Password: <span th:text="${password}"></span>
+            </p>
+        </div>
+        <div th:unless="${isAuthenticated}" class="tc">
+            <a th:href="@{/login/google}">Login with Google</a>
+        </div>
+    </main>
 </body>
 </html>
