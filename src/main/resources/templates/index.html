@@ -5,31 +5,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>VPN Authenticator</title>
     <link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css"/>
+    <style>
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+            }
+        }
+        .fade-out {
+        opacity: 1;
+        animation: fadeOut 1s ease-in 1 forwards;
+        }
+    </style>
 </head>
 <body class="bg-near-white near-black helvetica">
     <main class="pa3 center measure-wide lh-copy">
         <div class="tc">
-            <h2>VPN Authenticator</h2>
+            <h1 class="f3">VPN Authenticator</h1>
         </div>
         <div th:if="${isAuthenticated}" class="mr5 ml5">
-            <p>
+            <p class="tc">
                 Logged in as
             </p>
-            <p class="tc">
-                <img th:src="${picture}" width="50px"/><br />
-                <span th:text="${name}"></span>
-            </p>
-            <p>
-                Use these credentials in your VPN client
-            </p>
-            <p>
-                Login: <span th:text="${email}"></span><br />
-                Password: <span th:text="${password}"></span>
-            </p>
+            <div class="flex flex-column items-center">
+                <img th:src="${picture}" class="h3 w3 db tc" width="64px" alt="User image">
+                <span th:text="${name}" class="f4">Remove Name</span>
+            </div>
+            <div class="mt3 mb4">
+                <p>
+                    Use these credentials in your VPN client.<br>
+                    Click on them to copy to clipboard.
+                </p>
+                <span class="b">Login:</span> 
+                <span class="bb bt-0 bl-0 br-0 b--dashed pointer js-copy" th:data-clipboard-text="${email}" title="Click to copy to clipboard" th:text="${email}"></span><br>
+                <span class="b">Password:</span> 
+                <span class="bb bt-0 bl-0 br-0 b--dashed pointer js-copy" th:data-clipboard-text="${password}" title="Click to copy to clipboard" th:text="${password}"></span>
+                <span class="dn pl2 green js-copied">Copied!</span>
+            </div>
         </div>
-        <div th:unless="${isAuthenticated}" class="tc">
-            <a th:href="@{/login/google}">Login with Google</a>
+        <div th:unless="${isAuthenticated}" class="tc ma5">
+            <a th:href="@{/login/google}" class="f5 link dim dark-gray pv2 ph3 ba bw1 br2 inline-flex items-center tc">
+                <img class="dib sw1 h1 pr2" src='data:image/svg+xml;utf8,%3Csvg%20enable-background%3D%22new%200%200%20400%20400%22%20height%3D%22400px%22%20id%3D%22Layer_1%22%20version%3D%221.1%22%20viewBox%3D%220%200%20400%20400%22%20width%3D%22400px%22%20xml%3Aspace%3D%22preserve%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%3Cg%3E%3Cpath%20d%3D%22M142.9%2C24.2C97.6%2C39.7%2C59%2C73.6%2C37.5%2C116.5c-7.5%2C14.8-12.9%2C30.5-16.2%2C46.8c-8.2%2C40.4-2.5%2C83.5%2C16.1%2C120.3%20%20%20c12.1%2C24%2C29.5%2C45.4%2C50.5%2C62.1c19.9%2C15.8%2C43%2C27.6%2C67.6%2C34.1c31%2C8.3%2C64%2C8.1%2C95.2%2C1c28.2-6.5%2C54.9-20%2C76.2-39.6%20%20%20c22.5-20.7%2C38.6-47.9%2C47.1-77.2c9.3-31.9%2C10.5-66%2C4.7-98.8c-58.3%2C0-116.7%2C0-175%2C0c0%2C24.2%2C0%2C48.4%2C0%2C72.6c33.8%2C0%2C67.6%2C0%2C101.4%2C0%20%20%20c-3.9%2C23.2-17.7%2C44.4-37.2%2C57.5c-12.3%2C8.3-26.4%2C13.6-41%2C16.2c-14.6%2C2.5-29.8%2C2.8-44.4-0.1c-14.9-3-29-9.2-41.4-17.9%20%20%20c-19.8-13.9-34.9-34.2-42.6-57.1c-7.9-23.3-8-49.2%2C0-72.4c5.6-16.4%2C14.8-31.5%2C27-43.9c15-15.4%2C34.5-26.4%2C55.6-30.9%20%20%20c18-3.8%2C37-3.1%2C54.6%2C2.2c15%2C4.5%2C28.8%2C12.8%2C40.1%2C23.6c11.4-11.4%2C22.8-22.8%2C34.2-34.2c6-6.1%2C12.3-12%2C18.1-18.3%20%20%20c-17.3-16-37.7-28.9-59.9-37.1C228.2%2C10.6%2C183.2%2C10.3%2C142.9%2C24.2z%22%20fill%3D%22%23FFFFFF%22%2F%3E
+                %20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%3E%3Cpath%20d%3D%22M142.9%2C24.2c40.2-13.9%2C85.3-13.6%2C125.3%2C1.1c22.2%2C8.2%2C42.5%2C21%2C59.9%2C37.1c-5.8%2C6.3-12.1%2C12.2-18.1%2C18.3%20%20%20%20c-11.4%2C11.4-22.8%2C22.8-34.2%2C34.2c-11.3-10.8-25.1-19-40.1-23.6c-17.6-5.3-36.6-6.1-54.6-2.2c-21%2C4.5-40.5%2C15.5-55.6%2C30.9%20%20%20%20c-12.2%2C12.3-21.4%2C27.5-27%2C43.9c-20.3-15.8-40.6-31.5-61-47.3C59%2C73.6%2C97.6%2C39.7%2C142.9%2C24.2z%22%20fill%3D%22%23EA4335%22%2F%3E%3C%2Fg%3E
+                %20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%3E%3Cpath%20d%3D%22M21.4%2C163.2c3.3-16.2%2C8.7-32%2C16.2-46.8c20.3%2C15.8%2C40.6%2C31.5%2C61%2C47.3c-8%2C23.3-8%2C49.2%2C0%2C72.4%20%20%20%20c-20.3%2C15.8-40.6%2C31.6-60.9%2C47.3C18.9%2C246.7%2C13.2%2C203.6%2C21.4%2C163.2z%22%20fill%3D%22%23FBBC05%22%2F%3E%3C%2Fg%3E
+                %20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%3E%3Cpath%20d%3D%22M203.7%2C165.1c58.3%2C0%2C116.7%2C0%2C175%2C0c5.8%2C32.7%2C4.5%2C66.8-4.7%2C98.8c-8.5%2C29.3-24.6%2C56.5-47.1%2C77.2%20%20%20%20c-19.7-15.3-39.4-30.6-59.1-45.9c19.5-13.1%2C33.3-34.3%2C37.2-57.5c-33.8%2C0-67.6%2C0-101.4%2C0C203.7%2C213.5%2C203.7%2C189.3%2C203.7%2C165.1z%22%20fill%3D%22%234285F4%22%2F%3E%3C%2Fg%3E
+                %20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%3E%3Cpath%20d%3D%22M37.5%2C283.5c20.3-15.7%2C40.6-31.5%2C60.9-47.3c7.8%2C22.9%2C22.8%2C43.2%2C42.6%2C57.1c12.4%2C8.7%2C26.6%2C14.9%2C41.4%2C17.9%20%20%20%20c14.6%2C3%2C29.7%2C2.6%2C44.4%2C0.1c14.6-2.6%2C28.7-7.9%2C41-16.2c19.7%2C15.3%2C39.4%2C30.6%2C59.1%2C45.9c-21.3%2C19.7-48%2C33.1-76.2%2C39.6%20%20%20%20c-31.2%2C7.1-64.2%2C7.3-95.2-1c-24.6-6.5-47.7-18.2-67.6-34.1C67%2C328.9%2C49.6%2C307.5%2C37.5%2C283.5z%22%20fill%3D%22%2334A853%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E'>
+                <span class="dib">Login with Google</span>
+            </a>
         </div>
     </main>
+    <script src="https://unpkg.com/clipboard@2.0.0/dist/clipboard.min.js"></script>
+    <script>
+        var clipboard = new ClipboardJS('.js-copy');
+        
+        clipboard.on('success', function (e) {
+            if (e.trigger.nextSibling.className === undefined || e.trigger.nextSibling.className.indexOf('js-copied') === -1) {
+                e.trigger.insertAdjacentHTML(
+                    'afterEnd', 
+                    '<span class="dib pl2 green js-copied-msg fade-out">Copied!</span>'
+                );
+            }
+            setTimeout(function () {
+                e.trigger.nextSibling.remove();
+            }, 1000);
+        });
+    </script>
 </body>
 </html>
