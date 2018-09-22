@@ -52,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return registration;
     }
 
-    private static final String[] WHITE_LIST = {"/", "/login**", "/error**", "/favicon.ico"};
+    private static final String[] WHITE_LIST = {"/", "/login**", "/error**", "/favicon.ico", "/google**"};
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
