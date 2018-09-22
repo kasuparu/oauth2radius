@@ -11,13 +11,14 @@ import java.net.SocketTimeoutException;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class RadiusEndToEndIntegrationTests extends RadiusIntegrationTestBase {
+public class RadiusIntegrationTests extends RadiusIntegrationTestBase {
 
     // TODO Make the set-up a static @BeforeClass
     // This require to figure out how to make everything underlying static
     // This will allow to not delete all rows on insertion
     @Before
     public void setUp() {
+        fixtures.clearUsers();
         fixtures.insertBasicUsers();
         fixtures.insertBasicClients();
     }

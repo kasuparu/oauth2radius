@@ -16,8 +16,11 @@ public class Fixtures {
     @Autowired
     private RadiusServerImpl server;
 
-    public void insertBasicUsers() {
+    public void clearUsers() {
         this.radCheckRepository.deleteAll();
+    }
+
+    public void insertBasicUsers() {
         RadCheck l2tp = new RadCheck(1, "l2tp", "Cleartext-Password", ":=", "l2tp");
         RadCheck test = new RadCheck(2, "testuser@mailinator.com", "Cleartext-Password", ":=", "testuser@mailinator.com-password");
         this.radCheckRepository.save(l2tp);

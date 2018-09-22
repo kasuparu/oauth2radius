@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceS
 import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -27,6 +28,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     protected OAuth2ClientContext oauth2ClientContext;
+
+    @Autowired
+    protected ApplicationEventPublisher applicationEventPublisher;
 
     @Bean
     @ConfigurationProperties("google.client")
@@ -64,6 +68,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     protected Filter ssoFilter() {
         OAuth2ClientAuthenticationProcessingFilter googleFilter = new OAuth2ClientAuthenticationProcessingFilter("/login/google");
+        googleFilter.setApplicationEventPublisher(applicationEventPublisher);
         OAuth2RestTemplate googleTemplate = new OAuth2RestTemplate(googleOauthConfig(), oauth2ClientContext);
         googleFilter.setRestTemplate(googleTemplate);
         UserInfoTokenServices tokenServices = new UserInfoTokenServices(googleResource().getUserInfoUri(), googleOauthConfig().getClientId());

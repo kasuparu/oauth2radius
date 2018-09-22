@@ -26,6 +26,7 @@ public class RadCheckRepositoryTests {
 
 	@Before
 	public void setUp() {
+	    fixtures.clearUsers();
         fixtures.insertBasicUsers();
 	}
 

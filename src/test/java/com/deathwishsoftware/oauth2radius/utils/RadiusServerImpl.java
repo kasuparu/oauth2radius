@@ -1,7 +1,6 @@
 package com.deathwishsoftware.oauth2radius.utils;
 
-import com.deathwishsoftware.oauth2radius.persistence.RadCheck;
-import com.deathwishsoftware.oauth2radius.persistence.RadCheckRepository;
+import com.deathwishsoftware.oauth2radius.persistence.RadCheckService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.tinyradius.util.RadiusServer;
@@ -14,7 +13,7 @@ public class RadiusServerImpl extends RadiusServer {
     private static Logger logger = Logger.getLogger(RadiusServerImpl.class);
 
     @Autowired
-    private RadCheckRepository radCheckRepository;
+    private RadCheckService radCheckService;
 
     private Map<String, String> clients;
 
@@ -32,15 +31,7 @@ public class RadiusServerImpl extends RadiusServer {
 
     @Override
     public String getUserPassword(String userName) {
-        RadCheck userRecord = this.radCheckRepository.findByUsername(userName);
-        if (userRecord == null) {
-            return null;
-        }
-        if ("Cleartext-Password".equals(userRecord.getAttribute()) && ":=".equals(userRecord.getOp())) {
-            return userRecord.getValue();
-        }
-        logger.warn(String.format("Password for user %s must be stored in cleartext", userName));
-        return null;
+        return this.radCheckService.getUserPassword(userName);
     }
 
     public void setClients(Map<String, String> clients) {

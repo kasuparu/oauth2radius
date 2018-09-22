@@ -1,6 +1,7 @@
 package com.deathwishsoftware.oauth2radius.radius;
 
 import com.deathwishsoftware.oauth2radius.fixtures.Fixtures;
+import com.deathwishsoftware.oauth2radius.persistence.RadCheckService;
 import com.deathwishsoftware.oauth2radius.utils.MalformedAccessRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
@@ -20,6 +21,9 @@ public class RadiusIntegrationTestBase {
 
     @Autowired
     protected Fixtures fixtures;
+
+    @Autowired
+    protected RadCheckService radCheckService;
 
     RadiusIntegrationTestBase() {
     }
