@@ -26,3 +26,4 @@
 
 ### Project ###
 src/main/resources/application-default.properties
+src/main/resources/oauth2radius.p12
