@@ -41,7 +41,6 @@
                 <span class="bb bt-0 bl-0 br-0 b--dashed pointer js-copy" th:data-clipboard-text="${email}" title="Click to copy to clipboard" th:text="${email}"></span><br>
                 <span class="b">Password:</span> 
                 <span class="bb bt-0 bl-0 br-0 b--dashed pointer js-copy" th:data-clipboard-text="${password}" title="Click to copy to clipboard" th:text="${password}"></span>
-                <span class="dn pl2 green js-copied">Copied!</span>
             </div>
         </div>
         <div th:unless="${isAuthenticated}" class="tc ma5">
@@ -65,10 +64,9 @@
                     'afterEnd', 
                     '<span class="dib pl2 green js-copied-msg fade-out">Copied!</span>'
                 );
+                document.querySelector('.fade-out')
+                    .addEventListener('animationend', function() { e.trigger.nextSibling.remove() });
             }
-            setTimeout(function () {
-                e.trigger.nextSibling.remove();
-            }, 1000);
         });
     </script>
 </body>
