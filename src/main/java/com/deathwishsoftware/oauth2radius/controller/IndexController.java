@@ -3,6 +3,7 @@ package com.deathwishsoftware.oauth2radius.controller;
 import com.deathwishsoftware.oauth2radius.persistence.RadCheckService;
 import com.deathwishsoftware.oauth2radius.util.AuthenticationProperties;
 import com.deathwishsoftware.oauth2radius.util.OAuth2AuthenticationUtils;
+import com.deathwishsoftware.oauth2radius.util.WhitelistedDomainsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
@@ -15,22 +16,38 @@ public class IndexController {
     @Autowired
     private RadCheckService radCheckService;
 
+    @Autowired
+    private WhitelistedDomainsUtils whitelistedDomainsUtils;
+
     @GetMapping("/")
     public String index(Model model, OAuth2Authentication auth) {
-        model.addAttribute("isAuthenticated", auth != null && auth.isAuthenticated());
+        boolean isAuthenticated = auth != null && auth.isAuthenticated();
+        model.addAttribute("isAuthenticated", isAuthenticated);
 
-        if (auth != null && auth.isAuthenticated()) {
-            AuthenticationProperties properties = OAuth2AuthenticationUtils.extractAuthenticationProperties(auth);
-            if (properties != null) {
-
-                String password = this.radCheckService.getUserPassword(properties.getEmail());
-
-                model.addAttribute("picture", properties.getPictureUrl());
-                model.addAttribute("name", properties.getName());
-                model.addAttribute("email", properties.getEmail());
-                model.addAttribute("password", password);
-            }
+        if (!isAuthenticated) {
+            return "index";
         }
+
+        AuthenticationProperties properties = OAuth2AuthenticationUtils.extractAuthenticationProperties(auth);
+
+        if (properties == null) {
+            return "index";
+        }
+
+        String email = properties.getEmail();
+        boolean isAllowedDomain = whitelistedDomainsUtils.isAllowed(properties.getEmail());
+        model.addAttribute("isAllowedDomain", isAllowedDomain);
+
+        if (!isAllowedDomain) {
+            return "index";
+        }
+
+        String password = this.radCheckService.getUserPassword(email);
+
+        model.addAttribute("picture", properties.getPictureUrl());
+        model.addAttribute("name", properties.getName());
+        model.addAttribute("email", properties.getEmail());
+        model.addAttribute("password", password);
 
         return "index";
     }
